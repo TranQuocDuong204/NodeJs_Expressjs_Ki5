@@ -5,6 +5,7 @@ const app = express();
 const port = 8080;
 import connection from "../src/config/db/index.js";
 import bodyParser  from 'body-parser';
+import Post from './app/model/Post.js';
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

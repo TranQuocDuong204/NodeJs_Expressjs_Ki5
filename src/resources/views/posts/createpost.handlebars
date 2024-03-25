@@ -18,15 +18,16 @@
       </div>
     </div>
     <div class="row tm-row">
-        <form action="">
+        <form action="/posts/store" method="post">
       <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">Tiêu đề bài
           viết</label>
         <input
-          type="email"
+          type="text"
           class="form-control"
           id="exampleFormControlInput1"
           placeholder="title post"
+          name="title"
         />
       </div>
       <div class="mb-3">
@@ -40,9 +41,22 @@
           class="form-control"
           id="exampleFormControlTextarea1"
           rows="3"
+          name="content"
         ></textarea>
+
+        <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Tác giả
+          </label>
+        <input
+          type="text"
+          class="form-control"
+          id="exampleFormControlInput1"
+          placeholder="title post"
+          name="author"
+        />
       </div>
-      <button type="button" class="btn btn-info">Đăng Bài</button>
+      </div>
+      <button type="submit" class="btn btn-info">Đăng Bài</button>
       </form>
     </div>
     <div class="row tm-row">
