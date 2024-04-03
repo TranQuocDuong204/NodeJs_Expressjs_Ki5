@@ -1,9 +1,10 @@
 class Post {
-    constructor(_id, title, content, author) {
+    constructor(_id, title, content, author, img) {
         this._id = _id;
         this.title = title;
         this.content = content;
         this.author = author;
+        this.img = img;
     }
 
     // insert a new post
@@ -23,7 +24,7 @@ class Post {
     static async findAll(db) {
         try {
             const docs = await db.collection('posts').find({}).toArray();
-            return docs.map(doc => new Post(doc._id, doc.title, doc.content, doc.author));
+            return docs.map(doc => new Post(doc._id, doc.title, doc.content, doc.author, doc.img));
         } catch (err) {
             console.error(err);
             throw err;
@@ -46,7 +47,7 @@ class Post {
         try {
             const result = await db.collection('posts').updateOne(
                 { _id: id },
-                { $set: { title: this.title, content: this.content, author: this.author } }
+                { $set: { title: this.title, content: this.content, author: this.author , img: this.img} }
             );
             return result;
         } catch (err) {

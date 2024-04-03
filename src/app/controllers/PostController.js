@@ -66,41 +66,41 @@ class postControllers {
   //     });
   //   }
 
-  // async edit(req, res) {
-  //   connection.connect().then(async (db) => {
-  //     try {
-  //       const result = await Post.findById(db, new ObjectId(req.params.id));
-  //       res.render("posts/edit", { post: result });
-  //     } catch (err) {
-  //       console.error(err);
-  //     } finally {
-  //       await connection.close();
-  //     }
-  //   });
-  // }
+  async edit(req, res) {
+    connection.connect().then(async (db) => {
+      try {
+        const result = await Post.findById(db, new ObjectId(req.params.id));
+        res.render("posts/edit", { post: result });
+      } catch (err) {
+        console.error(err);
+      } finally {
+        await connection.close();
+      }
+    });
+  }
 
-  // async updates(req, res) {
-  //   console.log(res.body);
-  //   connection.connect().then(async (db) => {
-  //     try {
-  //       const post = new Post(
-  //         undefined,
-  //         req.body.title,
-  //         req.body.content,
-  //         req.body.author
-  //       );
-  //       console.log(post);
-  //       const result = await post.update(db);
-  //       console.log("check result",result);
-  //       res.redirect("/posts");
-  //     } catch (err) {
-  //       console.error("check error",err);
-  //       res.status(500).send("An error occurred");
-  //     } finally {
-  //       await connection.close();
-  //     }
-  //   });
-  // }
+  async updates(req, res) {
+    console.log(res.body);
+    connection.connect().then(async (db) => {
+      try {
+        const post = new Post(
+          undefined,
+          req.body.title,
+          req.body.content,
+          req.body.author
+        );
+        console.log(post);
+        const result = await post.update(db);
+        console.log("check result",result);
+        res.redirect("/posts");
+      } catch (err) {
+        console.error("check error",err);
+        res.status(500).send("An error occurred");
+      } finally {
+        await connection.close();
+      }
+    });
+  }
 }
 
 export default new postControllers();

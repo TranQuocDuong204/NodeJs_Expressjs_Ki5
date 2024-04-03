@@ -13,9 +13,7 @@ class homeController {
       }
     });
   }
-  login(req, res) {
-    res.render("login");
-  }
+
 }
 
 export default new homeController();
