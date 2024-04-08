@@ -2,7 +2,6 @@ import Post from "../model/Post.js";
 import connection from "../../config/db/index.js";
 import { ObjectId } from "mongodb";
 
-
 class postControllers {
   index(req, res) {
     connection.connect().then(async (db) => {
@@ -18,15 +17,15 @@ class postControllers {
   // GET /user/:id
   details(req, res) {
     connection.connect().then(async (db) => {
-        try {
-            const result = await Post.findById(db, new ObjectId(req.params.id));
-            console.log(result);
-            res.render('posts/detail', { post: result });
-        } catch (err) {
-            console.error("check err",err);
-        }
+      try {
+        const result = await Post.findById(db, new ObjectId(req.params.id));
+        console.log(result);
+        res.render("posts/detail", { post: result });
+      } catch (err) {
+        console.error("check err", err);
+      }
     });
-}
+  }
 
   create(req, res) {
     res.render("posts/createpost");
@@ -36,35 +35,44 @@ class postControllers {
     console.log(req.body);
     connection.connect().then(async (db) => {
       try {
+        if (!req.file) {
+          return res.status(400).send("No");
+        }
         const post = new Post(
           undefined,
           req.body.title,
           req.body.content,
-          req.body.author
+          req.body.author,
+          req.file.filename
         );
         const result = await post.save(db);
+
+        console.log(result);
+        res.redirect("/posts");
+        // await res.status(200).json(result);
+      } catch (err) {
+        console.error(err);
+        res.status(500).send("An error occurred");
+      } finally {
+        await connection.close();
+      }
+    });
+  }
+
+  async delete(req, res) {
+    connection.connect().then(async (db) => {
+      try {
+        const result = await Post.del(db, new ObjectId(req.body._id));
         console.log(result);
         res.redirect("/posts");
       } catch (err) {
         console.error(err);
         res.status(500).send("An error occurred");
+      } finally {
+        await connection.close();
       }
     });
   }
-  //   delete(req, res) {
-  //     connection.connect().then(async (db) => {
-  //       try {
-  //         const userId = req.params.id;
-  //         const results = await Post.del(db, new ObjectId(userId));
-  //         console.log(results);
-  //         res.redirect("/posts");
-  //       } catch (err) {
-  //         console.error(err);
-  //       } finally {
-  //         await connection.close();
-  //       }
-  //     });
-  //   }
 
   async edit(req, res) {
     connection.connect().then(async (db) => {
@@ -79,22 +87,31 @@ class postControllers {
     });
   }
 
+
+
   async updates(req, res) {
-    console.log(res.body);
+    const postId = req.params.id; // Get the post ID from the URL parameters
+    console.log(postId);
+    if (!req.file) {
+      return res.status(400).send("No");
+    }
+  
     connection.connect().then(async (db) => {
       try {
         const post = new Post(
           undefined,
           req.body.title,
           req.body.content,
-          req.body.author
+          req.body.author,
+          req.file.filename
         );
-        console.log(post);
-        const result = await post.update(db);
-        console.log("check result",result);
+  
+        const result = await post.updates(db, new ObjectId(req.params.id));
+        console.log("Updated post:", result);
+  
         res.redirect("/posts");
       } catch (err) {
-        console.error("check error",err);
+        console.error("Error updating post:", err);
         res.status(500).send("An error occurred");
       } finally {
         await connection.close();

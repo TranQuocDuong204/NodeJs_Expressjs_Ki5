@@ -1,9 +1,10 @@
 class User {
-    constructor(_id, name, email, password) {
+    constructor(_id, name, email, password, role) {
         this._id = _id;
         this.name = name;
         this.email = email;
         this.password = password;
+        this.role = role;
      }
 
     // insert a new user
@@ -32,7 +33,7 @@ class User {
     static async findByEmail(db, email) {
         try {
             const result = await db.collection('users').findOne({email: email});
-            return result ? new User(result._id, result.name, result.email, result.password) : null;
+            return result ? new User(result._id, result.name, result.email, result.password, result.role) : null;
         } catch (err) {
             console.error(`Error: ${err}`);
             throw err;

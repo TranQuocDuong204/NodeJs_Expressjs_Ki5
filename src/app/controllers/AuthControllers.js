@@ -14,6 +14,7 @@ class AuthControllers {
   }
   async register(req, res) {
     // check if email is available
+    let role = "USER"
     const { name, email, password } = req.body;
     if (!name || !email || !password) {
       return res
@@ -43,7 +44,8 @@ class AuthControllers {
                   undefined,
                   req.body.name,
                   req.body.email,
-                  hash
+                  hash,
+                  role
                 );
                 user.save(db).then((result) => {
                   res.redirect("/auth");

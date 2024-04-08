@@ -32,7 +32,8 @@ class Auth {
       console.log(`Token from Cookie: ${token}`);
     }
     if (token == null) {
-      return res.status(401).json({ message: "Nodata" });
+      req.flash('error', 'Nodata');  // Set flash message (error type)
+      return res.status(401).json({ message: "Unauthorized" });
     }
 
     jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
