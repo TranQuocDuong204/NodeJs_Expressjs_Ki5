@@ -7,7 +7,11 @@ class postControllers {
     connection.connect().then(async (db) => {
       try {
         const result = await Post.findAll(db);
-        res.render("posts/post", { posts: result });
+        if (req.cookies.value.role === "ADMIN") {
+          res.render("posts/post", { posts: result });
+        } else {
+          res.redirect("posts/postUser");
+        }
       } catch (e) {
         console.log("check error: ", e);
       }
@@ -87,15 +91,13 @@ class postControllers {
     });
   }
 
-
-
   async updates(req, res) {
     const postId = req.params.id; // Get the post ID from the URL parameters
     console.log(postId);
     if (!req.file) {
       return res.status(400).send("No");
     }
-  
+
     connection.connect().then(async (db) => {
       try {
         const post = new Post(
@@ -105,14 +107,33 @@ class postControllers {
           req.body.author,
           req.file.filename
         );
-  
+
         const result = await post.updates(db, new ObjectId(req.params.id));
         console.log("Updated post:", result);
-  
+
         res.redirect("/posts");
       } catch (err) {
         console.error("Error updating post:", err);
         res.status(500).send("An error occurred");
+      } finally {
+        await connection.close();
+      }
+    });
+  }
+
+  async postUser(req, res) {
+    connection.connect().then(async (db) => {
+      try {
+        const userRole = req.cookies.value.role;
+        const userId = req.cookies.value._id;
+        console.log("check iduser", userId);
+        console.log("check usesrRole", userRole);
+        const posts = await Post.findAllPostsByUserId(db, userId); // Find all posts for the user
+
+        res.render("posts/postUser", { posts: posts }); // Pass all posts to the template
+      } catch (err) {
+        console.error(err);
+        // Handle errors appropriately (e.g., send an error response to the client)
       } finally {
         await connection.close();
       }

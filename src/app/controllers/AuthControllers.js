@@ -144,6 +144,7 @@ class AuthControllers {
   }
   async logout(req, res) {
     res.clearCookie("token");
+    res.clearCookie("value");
     res.redirect("/");
   }
 }

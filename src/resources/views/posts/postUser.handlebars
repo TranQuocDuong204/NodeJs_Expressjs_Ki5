@@ -1,0 +1,84 @@
+<div class="container-fluid">
+        <main class="tm-main">
+            <!-- Search form -->
+            <div class="row tm-row">
+                <div class="col-12">
+                    <form method="GET" class="form-inline tm-mb-80 tm-search-form">                
+                        <input class="form-control tm-search-input" name="query" type="text" placeholder="Search..." aria-label="Search">
+                        <button class="tm-search-button" type="submit">
+                         <i class="fa-solid fa-magnifying-glass" style="width: 100px;"></i>
+                        </button>                                
+                    </form>
+                </div>                
+            </div>   
+                    <a href="/posts/create" style="width: 200px; height: 200px; background-color: #0CC; text-decoration: none; padding: 10px; color: #fff;">New Post</a>
+            
+              <div class="row tm-row">  
+             
+               
+                 {{#each posts}} 
+                <article class="col-12 col-md-6 tm-post">
+                    <hr class="tm-hr-primary">
+                    <a href="/posts/{{_id}}" class="effect-lily tm-post-link tm-pt-60">
+                        <div class="tm-post-link-inner">
+                            <img src="{{img}}" alt="Image" class="img-fluid">                            
+                        </div>
+                        <span class="position-absolute tm-new-badge">New</span>
+                        <h2 class="tm-pt-30 tm-color-primary tm-post-title">{{title}}</h2>
+                    </a>                    
+                    
+                    <div class="d-flex justify-content-between tm-pt-45">
+                        <span class="tm-color-primary">{{author}}</span>
+                        <span class="tm-color-primary">June 24, 2020</span>
+                    </div>
+                     
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <span>36 comments</span>
+                        <span>by Admin Nat</span>
+                    </div>
+                    <div class="container">
+                     <form action="posts/delete" method="post">
+                            <input type="hidden" name="_id" value="{{_id}}">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+
+                        <a href="/posts/edit/{{_id}}" class="card-link" style="padding: 5px 19px;
+    text-align: center;
+    border-radius: 5px;
+    text-decoration: none;
+    background-color: #000;
+    color: rgb(255, 255, 255);">Edit</a>
+
+                        
+              </div>
+                </article>
+                
+                 {{/each}}
+            </div>
+            
+            <div class="row tm-row tm-mt-100 tm-mb-75">
+                <div class="tm-prev-next-wrapper">
+                    <a href="#" class="mb-2 tm-btn tm-btn-primary tm-prev-next disabled tm-mr-20">Prev</a>
+                    <a href="#" class="mb-2 tm-btn tm-btn-primary tm-prev-next">Next</a>
+                </div>
+                <div class="tm-paging-wrapper">
+                    <span class="d-inline-block mr-3">Page</span>
+                    <nav class="tm-paging-nav d-inline-block">
+                        <ul>
+                            <li class="tm-paging-item active">
+                                <a href="#" class="mb-2 tm-btn tm-paging-link">1</a>
+                            </li>
+                            <li class="tm-paging-item">
+                                <a href="#" class="mb-2 tm-btn tm-paging-link">2</a>
+                            </li>
+                            <li class="tm-paging-item">
+                                <a href="#" class="mb-2 tm-btn tm-paging-link">3</a>
+                            </li>
+                            <li class="tm-paging-item">
+                                <a href="#" class="mb-2 tm-btn tm-paging-link">4</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>                
+            </div>            

@@ -1,0 +1,62 @@
+<div class="container-fluid">
+        <main class="tm-main">
+            <!-- Search form -->
+            <div class="row tm-row">
+                <div class="col-12">
+                    <form method="GET" class="form-inline tm-mb-80 tm-search-form">                
+                        <input class="form-control tm-search-input" name="query" type="text" placeholder="Search..." aria-label="Search">
+                        <button class="tm-search-button" type="submit">
+                         <i class="fa-solid fa-magnifying-glass" style="width: 100px;"></i>
+                        </button>                                
+                    </form>
+                </div>                
+            </div>   
+                   
+            
+           
+            <table class="table">
+                 
+                <thead>
+                    
+                    <tr>
+                        
+                        
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                     {{#each userAll}}
+                    <tr>
+                        
+                        <td>{{name}}</td>
+                        <td>{{email}}</td>
+                        <td>{{role}}</td>
+
+
+                        <td>
+                        <form action="user/delete" method="post">
+                            <input type="hidden" name="_id" value="{{_id}}">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                             <a href="user/edit/{{_id}}" class="card-link" style="padding: 5px 19px;
+    text-align: center;
+    border-radius: 5px;
+    text-decoration: none;
+    background-color: #000;
+    color: rgb(255, 255, 255);">Edit</a>
+
+                        </td>
+                    </tr>
+                   {{/each}}
+                </tbody>
+
+            </table>
+            
+</div>
+
+
+            
+            

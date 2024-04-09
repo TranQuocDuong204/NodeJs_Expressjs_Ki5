@@ -1,10 +1,11 @@
 class Post {
-  constructor(_id, title, content, author, img) {
+  constructor(_id, title, content, author, img, id_user) {
     this._id = _id;
     this.title = title;
     this.content = content;
     this.author = author;
     this.img = img;
+    this.id_user = id_user;
   }
 
   // insert a new post
@@ -23,7 +24,7 @@ class Post {
     try {
       const docs = await db.collection("posts").find({}).toArray();
       return docs.map(
-        (doc) => new Post(doc._id, doc.title, doc.content, doc.author, doc.img)
+        (doc) => new Post(doc._id, doc.title, doc.content, doc.author, doc.img, doc.id_user)
       );
     } catch (err) {
       console.error(err);
@@ -53,6 +54,7 @@ class Post {
             content: this.content,
             author: this.author,
             img: this.img,
+            id_user: this.id_user,
           },
         }
       );
@@ -70,6 +72,19 @@ class Post {
       return result;
     } catch (err) {
       console.error(err);
+      throw err;
+    }
+  }
+
+  static async findAllPostsByUserId(db, userId) {
+    try {
+      const collection = db.collection("posts");
+      const cursor = await collection.find({ id_user: userId });
+
+      const posts = await cursor.toArray();
+      return posts;
+    } catch (err) {
+      console.error("Error finding posts by user ID:", err);
       throw err;
     }
   }

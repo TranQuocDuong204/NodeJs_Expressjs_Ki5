@@ -15,6 +15,7 @@ router.post("/update/:id", uploadMiddleware, postControllers.updates);
 router.get('/edit/:id', postControllers.edit);
 router.post("/delete", postControllers.delete);
 router.post("/store", uploadMiddleware, postControllers.store);
+router.get('/postUser',  postControllers.postUser);
 router.get("/create", postControllers.create);
 router.get("/:id", postControllers.details);
 router.get("/", postControllers.index);

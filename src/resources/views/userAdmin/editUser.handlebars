@@ -1,0 +1,44 @@
+<div class="container-fluid">
+        <main class="tm-main">
+            <!-- Search form -->
+            <div class="row tm-row">
+                <div class="col-12">
+                    <form method="GET" class="form-inline tm-mb-80 tm-search-form">                
+                        <input class="form-control tm-search-input" name="query" type="text" placeholder="Search..." aria-label="Search">
+                        <button class="tm-search-button" type="submit">
+                         <i class="fa-solid fa-magnifying-glass" style="width: 100px;"></i>
+                        </button>                                
+                    </form>
+                </div>                
+            </div>   
+                   
+            
+           
+            <form action="/user/update/{{user._id}}" method="post">
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Name</label>
+    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{user.name}}" >
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Email</label>
+    <input type="text" class="form-control" id="exampleInputPassword1" value="{{user.email}}" >
+        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+  </div>
+
+  <div class="mb-3">
+    <input type="hidden" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{user.password}}">
+  </div>
+<div class="mb-3">
+<select class="form-select" aria-label="Default select example">
+  <option selected value="ADMIN">ADMIN</option>
+  <option value="USER">USER</option>
+</select>
+</div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+            
+</div>
+
+
+            
+            
