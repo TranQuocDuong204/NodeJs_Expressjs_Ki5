@@ -42,12 +42,14 @@ class postControllers {
         if (!req.file) {
           return res.status(400).send("No");
         }
+        const id_usser = req.cookies.value._id;
         const post = new Post(
           undefined,
           req.body.title,
           req.body.content,
           req.body.author,
-          req.file.filename
+          req.file.filename,
+          id_usser
         );
         const result = await post.save(db);
 

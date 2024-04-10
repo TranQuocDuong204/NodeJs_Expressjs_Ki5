@@ -7,7 +7,7 @@ class UserAdmin {
     connection.connect().then(async (db) => {
       try {
         const result = await User.findAllUser(db);
-        console.log("check user",result);
+        console.log("check user", result);
         res.render("userAdmin/userAll", { userAll: result });
       } catch (e) {
         console.log("check error: ", e);
@@ -42,32 +42,27 @@ class UserAdmin {
   }
 
   async updates(req, res) {
-    const postId = req.params.id; // Get the post ID from the URL parameters
-    console.log(postId);
+    const userId = req.params.id; // Lấy ID của user từ các tham số URL
+    console.log(userId);
 
-    connection.connect().then(async (db) => {
-      try {
-        const user = new User(
-          undefined,
-          req.body.name,
-          req.body.email,
-          req.body.password,
-          req.body.role
-        );
+    try {
+      const db = await connection.connect(); // Kết nối đến MongoDB
 
-        const result = await user.updates(db, new ObjectId(req.params.id));
-        console.log("Updated post:", result);
+      const updatedRole = req.body.role; // Lấy giá trị mới của role từ body của request
 
-        res.redirect("/user");
-      } catch (err) {
-        console.error("Error updating post:", err);
-        res.status(500).send("An error occurred");
-      } finally {
-        await connection.close();
-      }
-    });
+      const user = new User(); // Tạo một instance của model User (nếu cần)
+      const result = await user.updates(db, new ObjectId(userId), updatedRole); // Gọi phương thức updates từ model User
+
+      console.log("Updated user:", result);
+
+      res.redirect("/user"); // Chuyển hướng sau khi cập nhật thành công
+    } catch (err) {
+      console.error("Error updating user:", err);
+      res.status(500).send("An error occurred");
+    } finally {
+      await connection.close(); // Đóng kết nối với MongoDB
+    }
   }
-
 }
 
-export default new UserAdmin;
+export default new UserAdmin();

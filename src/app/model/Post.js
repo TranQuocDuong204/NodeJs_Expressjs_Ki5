@@ -24,7 +24,15 @@ class Post {
     try {
       const docs = await db.collection("posts").find({}).toArray();
       return docs.map(
-        (doc) => new Post(doc._id, doc.title, doc.content, doc.author, doc.img, doc.id_user)
+        (doc) =>
+          new Post(
+            doc._id,
+            doc.title,
+            doc.content,
+            doc.author,
+            doc.img,
+            doc.id_user
+          )
       );
     } catch (err) {
       console.error(err);
@@ -79,10 +87,9 @@ class Post {
   static async findAllPostsByUserId(db, userId) {
     try {
       const collection = db.collection("posts");
-      const cursor = await collection.find({ id_user: userId });
+      const cursor = await collection.find({ id_user: userId }).toArray();
 
-      const posts = await cursor.toArray();
-      return posts;
+      return cursor;
     } catch (err) {
       console.error("Error finding posts by user ID:", err);
       throw err;

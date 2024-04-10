@@ -1,7 +1,7 @@
 import express from "express";
 import postControllers from "../app/controllers/PostController.js";
 import multer from "multer";
-
+import Admin from "../app/helpers/Admin.js";
 const storage = multer.diskStorage({
   destination: "src/public/uploads",
   filename: (req, file, cb) => {
@@ -17,7 +17,7 @@ router.post("/delete", postControllers.delete);
 router.post("/store", uploadMiddleware, postControllers.store);
 router.get('/postUser',  postControllers.postUser);
 router.get("/create", postControllers.create);
-router.get("/:id", postControllers.details);
+router.get("/:id", Admin,postControllers.details);
 router.get("/", postControllers.index);
 
 export default router;

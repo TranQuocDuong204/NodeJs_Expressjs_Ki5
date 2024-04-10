@@ -52,14 +52,7 @@ class User {
     try {
       const docs = await db.collection("users").find({}).toArray();
       return docs.map(
-        (doc) =>
-          new User(
-            doc._id,
-            doc.name,
-            doc.email,
-            doc.password,
-            doc.role
-          )
+        (doc) => new User(doc._id, doc.name, doc.email, doc.password, doc.role)
       );
     } catch (err) {
       console.error(err);
@@ -77,7 +70,6 @@ class User {
     }
   }
 
-
   static async findByIdUser(db, id) {
     try {
       const doc = await db.collection("users").findOne({ _id: id });
@@ -88,16 +80,13 @@ class User {
     }
   }
 
-  async updates(db, id) {
+  async updates(db, id, newRole) {
     try {
       const result = await db.collection("users").updateOne(
         { _id: id },
         {
           $set: {
-            name: this.name,
-            email: this.email,
-            password: this.password,
-            role: this.role
+            role: newRole,
           },
         }
       );

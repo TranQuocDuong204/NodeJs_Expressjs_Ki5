@@ -17,23 +17,22 @@
             <form action="/user/update/{{user._id}}" method="post">
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Name</label>
-    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{user.name}}" >
+    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{user.name}}" disabled >
   </div>
   <div class="mb-3">
     <label for="exampleInputPassword1" class="form-label">Email</label>
-    <input type="text" class="form-control" id="exampleInputPassword1" value="{{user.email}}" >
+    <input type="text" class="form-control" id="exampleInputPassword1" value="{{user.email}}" disabled>
         <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
   </div>
 
   <div class="mb-3">
     <input type="hidden" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{user.password}}">
   </div>
-<div class="mb-3">
-<select class="form-select" aria-label="Default select example">
-  <option selected value="ADMIN">ADMIN</option>
-  <option value="USER">USER</option>
-</select>
-</div>
+
+  <div class="mb-3">
+    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{user.role}}" name="role">
+  </div>
+
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
             
